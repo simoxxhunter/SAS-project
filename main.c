@@ -105,6 +105,25 @@ void editAtask(task tasks[]){
 		}
 }
 //-------------------------------------------------------------------------------------
+int taskNoTOdelete = 0;
+
+void deleteAtask(task tasks[]){
+	printf("Please enter the task number that you want to delete:\n");
+	scanf("%d",&taskNoTOdelete);
+	
+	while(taskNoTOdelete < taskNo - 1 && taskNo > 0){
+		tasks[taskNoTOdelete] = tasks[taskNoTOdelete + 1];
+		printf("Task number %d has been deleted successfully.\n", taskNoTOdelete);
+		taskNoTOdelete++;
+	}
+	taskNo--;
+	if (taskNo == 0){
+		printf("\nthere is no tasks to delete !\n");
+	}else if(taskNoTOdelete > taskNo){
+		printf("invalid task number ! please enter a number below %d :\n",taskNo);
+	}
+}
+//-------------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
 	
 	int choice;
@@ -128,7 +147,7 @@ int main(int argc, char *argv[]) {
  			} else if (choice == 2) {
         		editAtask(tasks);
   			} else if (choice == 3) {
-        		deleteAtask(tasks,taskNo);
+        		deleteAtask(tasks);
   			} else if (choice == 4) {
         
   			} else if (choice == 5) {
