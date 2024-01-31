@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 typedef struct {
 	int day;
 	int month;
-	int year;
-	
+	int year;	
 }date;
+
 typedef struct {
 	int	 taskNo;
 	char title[25];
@@ -124,6 +124,34 @@ void deleteAtask(task tasks[]){
 	}
 }
 //-------------------------------------------------------------------------------------
+void filterbypriority(task tasks[]){
+	char priorityTOsearchfor[10];
+	
+	if(taskNo != 0){
+		int i=0;
+		printf("Please enter the priority you want to filter by: \n");
+		scanf("%s",priorityTOsearchfor);
+		
+		if(strcmp(priorityTOsearchfor, "Low") == 0 || strcmp(priorityTOsearchfor, "Meduim") == 0 ||strcmp(priorityTOsearchfor,"High" ) == 0){
+			while(strcmp(tasks[i].priority, priorityTOsearchfor) == 0){
+				
+			printf("\nTask number #%d:\n", tasks[i].taskNo);
+       		printf("Title: %s\n", tasks[i].title);
+        	printf("Priority: %s\n", tasks[i].priority);
+        	printf("Description: %s\n", tasks[i].description);
+        	printf("Due Date: %d/%d/%d\n", tasks[i].dueDate.day, tasks[i].dueDate.month, tasks[i].dueDate.year);
+        	printf("-------------------------------------------------\n");
+        	i++;
+			}		
+		}
+		printf("no tasks are found with that priority !\n");
+		printf("pelase enter a valid priority value, Low/Meduim/High\n");
+		
+	}else{
+		printf("no tasks to search in\n");
+		}
+}
+//-------------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
 	
 	int choice;
@@ -149,9 +177,8 @@ int main(int argc, char *argv[]) {
   			} else if (choice == 3) {
         		deleteAtask(tasks);
   			} else if (choice == 4) {
-        
+        		filterbypriority(tasks);
   			} else if (choice == 5) {
-  				
   		    	listallTasks(tasks);
  			} else if (choice == 6) {
  				
