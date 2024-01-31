@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 typedef struct {
 	int day;
 	int month;
-	int year;	
+	int year;
+	
 }date;
-
 typedef struct {
 	int	 taskNo;
 	char title[25];
@@ -19,31 +19,31 @@ typedef struct {
 	
 }task;
 //---------------------------------------------------------------------------------
-int taskNo = 0;
-void addAtask(task tasks[]) {
-    if (taskNo < 50) {  
-        tasks[taskNo].taskNo = taskNo ;
-    
-        printf("Enter the task title for the task number %d :\n",taskNo);
-        scanf(" %[^\n]", tasks[taskNo].title);
-			getchar(); 
+int taskNotoadd = 0;
+void addtask(task tasks[]) {
+	
+    if (taskNotoadd < 50) {  
+        tasks[taskNotoadd].taskNo = taskNotoadd + 1;
+
+        printf("Enter the task title: \n");
+        scanf(" %[^\n]s", tasks[taskNotoadd].title);
+			getchar();
         printf("Enter task priority: (Low/Meduim/High) \n");
-        scanf(" %[^\n]", tasks[taskNo].priority);
+        scanf(" %[^\n]s", tasks[taskNotoadd].priority);
 			getchar();
         printf("Enter task description: \n");
-        scanf(" %[^\n]", tasks[taskNo].description);
+        scanf(" %[^\n]s", tasks[taskNotoadd].description);
 			getchar();
-        printf("Enter due DAY (a number between 1-31):\n");
-        scanf("%d", &tasks[taskNo].dueDate.day);
+        printf("Enter the new due DAY (a number between 1-31):\n");
+        scanf("%d", &tasks[taskNotoadd].dueDate.day);
 
-        printf("Enter due MONTH (a number between 1-12):\n");
-        scanf("%d", &tasks[taskNo].dueDate.month);
+        printf("Enter the new due MONTH (a number between 1-12):\n");
+        scanf("%d", &tasks[taskNotoadd].dueDate.month);
         
-        printf("Enter due YEAR:\n");
-        scanf("%d", &tasks[taskNo].dueDate.year);
-        	getchar();
-        	
-        taskNo++;
+        printf("Enter the new due YEAR:\n");
+        scanf("%d", &tasks[taskNotoadd].dueDate.year);
+        
+        taskNotoadd++;
         printf("Task added successfully!\n");
         //exit(0) ;
     } else {
@@ -52,104 +52,17 @@ void addAtask(task tasks[]) {
     }
 }
 //-------------------------------------------------------------------------------------------------------------
-int i = 0;
 void listallTasks(task tasks[]){
-	
-	while (taskNo != 0 && i <= taskNo - 1){
-			printf("-------------------------------------------------\n");
-			printf("\nTask number #%d:\n", tasks[i].taskNo);
-       		printf("Title: %s\n", tasks[i].title);
-        	printf("Priority: %s\n", tasks[i].priority);
-        	printf("Description: %s\n", tasks[i].description);
-        	printf("Due Date: %d/%d/%d\n", tasks[i].dueDate.day, tasks[i].dueDate.month, tasks[i].dueDate.year);
-        	printf("-------------------------------------------------\n");
-        	i++;
-	}if (i == 0){
+	int i = 0;
+	while (taskNotoadd != 0 && i < taskNotoadd ){
+		printf("Task number #%d:\n", tasks[i].taskNo);
+        printf("Title: %s\n", tasks[i].title);
+        printf("Priority: %s\n", tasks[i].priority);
+        printf("Description: %s\n", tasks[i].description);
+        printf("Due Date: %02d/%02d/%04d\n", tasks[i].dueDate.day, tasks[i].dueDate.month, tasks[i].dueDate.year);
+        i++;
+	}  
 		printf("\nthere is no tasks to show, add some !\n\n");
-	}
-}
-//-------------------------------------------------------------------------------------
-int taskNotoedit = 0;
-void editAtask(task tasks[]){
-	
-	printf("please enter the TaskNo that you want to edit :\n");
-	scanf("%d",&taskNotoedit);
-	
-	if ( taskNo >= 0 && taskNotoedit < taskNo ){
-		printf("you are currently editing task number : %d \n", taskNotoedit);
-		
-		printf("Enter the new title for the task number %d : \n",taskNo - 1);
-        scanf(" %[^\n]", tasks[taskNotoedit].title);
-			getchar();
-        printf("Enter the new task priority value: (Low/Meduim/High) \n");
-        scanf(" %[^\n]", tasks[taskNotoedit].priority);
-			getchar();
-        printf("Enter the new task description: \n");
-        scanf(" %[^\n]", tasks[taskNotoedit].description);
-			getchar();
-        printf("Enter the new due DAY (a number between 1-31):\n");
-        scanf("%d", &tasks[taskNotoedit].dueDate.day);
-
-        printf("Enter the new due MONTH (a number between 1-12):\n");
-        scanf("%d", &tasks[taskNotoedit].dueDate.month);
-        
-        printf("Enter the new due YEAR:\n");
-        scanf("%d", &tasks[taskNotoedit].dueDate.year);
-        //	getchar();
-    
-        printf("Task edited successfully !\n");
-    	//exit(0) ;
-		
-		} else {
-			printf("invalid task number ! please retry.");
-		}
-}
-//-------------------------------------------------------------------------------------
-int taskNoTOdelete = 0;
-
-void deleteAtask(task tasks[]){
-	printf("Please enter the task number that you want to delete:\n");
-	scanf("%d",&taskNoTOdelete);
-	
-	while(taskNoTOdelete < taskNo - 1 && taskNo > 0){
-		tasks[taskNoTOdelete] = tasks[taskNoTOdelete + 1];
-		printf("Task number %d has been deleted successfully.\n", taskNoTOdelete);
-		taskNoTOdelete++;
-	}
-	taskNo--;
-	if (taskNo == 0){
-		printf("\nthere is no tasks to delete !\n");
-	}else if(taskNoTOdelete > taskNo){
-		printf("invalid task number ! please enter a number below %d :\n",taskNo);
-	}
-}
-//-------------------------------------------------------------------------------------
-void filterbypriority(task tasks[]){
-	char priorityTOsearchfor[10];
-	
-	if(taskNo != 0){
-		int i=0;
-		printf("Please enter the priority you want to filter by: \n");
-		scanf("%s",priorityTOsearchfor);
-		
-		if(strcmp(priorityTOsearchfor, "Low") == 0 || strcmp(priorityTOsearchfor, "Meduim") == 0 ||strcmp(priorityTOsearchfor,"High" ) == 0){
-			while(strcmp(tasks[i].priority, priorityTOsearchfor) == 0){
-				
-			printf("\nTask number #%d:\n", tasks[i].taskNo);
-       		printf("Title: %s\n", tasks[i].title);
-        	printf("Priority: %s\n", tasks[i].priority);
-        	printf("Description: %s\n", tasks[i].description);
-        	printf("Due Date: %d/%d/%d\n", tasks[i].dueDate.day, tasks[i].dueDate.month, tasks[i].dueDate.year);
-        	printf("-------------------------------------------------\n");
-        	i++;
-			}		
-		}
-		printf("no tasks are found with that priority !\n");
-		printf("pelase enter a valid priority value, Low/Meduim/High\n");
-		
-	}else{
-		printf("no tasks to search in\n");
-		}
 }
 //-------------------------------------------------------------------------------------
 int main(int argc, char *argv[]) {
@@ -158,6 +71,7 @@ int main(int argc, char *argv[]) {
 	task tasks[50];
 	
 		printf("welcome to the task management software.\n\n");
+	
 	do{
 		printf("type a number according to your choice:\n");
 		
@@ -171,14 +85,16 @@ int main(int argc, char *argv[]) {
 		scanf("%d",&choice);
 		getchar();
 			if (choice == 1) {
-     			addAtask(tasks);
+				
+     			addtask(tasks);
  			} else if (choice == 2) {
-        		editAtask(tasks);
+        
   			} else if (choice == 3) {
-        		deleteAtask(tasks);
+        
   			} else if (choice == 4) {
-        		filterbypriority(tasks);
+        
   			} else if (choice == 5) {
+  				
   		    	listallTasks(tasks);
  			} else if (choice == 6) {
  				
